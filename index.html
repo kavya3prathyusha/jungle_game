@@ -6,20 +6,21 @@
     <title>Jungle Learning Adventure</title>
     <style>
         body {
-            background-color: #8bc34a;
+            background-image: url('images/jungle_background.jpg');
+            background-size: cover;
             text-align: center;
             font-family: Arial, sans-serif;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .title {
-            font-size: 24px;
+            font-size: 28px;
             color: #4CAF50;
             margin-bottom: 20px;
         }
@@ -34,7 +35,7 @@
             background-color: #FFD700;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px;
             transition: 0.3s;
         }
         .zone:hover {
@@ -47,71 +48,75 @@
             border-radius: 10px;
             display: none;
         }
-        .word-option, .sentence-option, .phonics-option, .math-option {
-            padding: 10px;
-            margin: 5px;
+        .option {
+            padding: 15px;
+            margin: 10px;
             display: inline-block;
             background-color: #4CAF50;
             color: white;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
+            font-size: 18px;
+        }
+        .drag-drop {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .drop-zone {
+            width: 100px;
+            height: 50px;
+            border: 2px dashed #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="title">Welcome to Jungle Learning Adventure!</h1>
+        <h1 class="title">🌿 Welcome to Jungle Learning Adventure! 🦁</h1>
         <p>Select a learning zone:</p>
         <div class="game-section">
-            <div class="zone" onclick="startZone('englishGame')">English Zone</div>
-            <div class="zone" onclick="startZone('mathGame')">Math Zone</div>
-            <div class="zone" onclick="startZone('logicGame')">Logic Zone</div>
+            <div class="zone" onclick="startZone('englishGame')">📖 English Zone</div>
+            <div class="zone" onclick="startZone('mathGame')">🔢 Math Zone</div>
+            <div class="zone" onclick="startZone('logicGame')">🧩 Logic Zone</div>
         </div>
         
         <div class="game-area" id="englishGame">
-            <h2>English Learning Activities</h2>
+            <h2>📖 English Learning Activities</h2>
             
-            <h3>Phonics Safari</h3>
+            <h3>Phonics Safari 🦜</h3>
             <p>Click a letter to hear its phonics sound:</p>
-            <div class="phonics-option" onclick="playSound('phonics_a')">A</div>
-            <div class="phonics-option" onclick="playSound('phonics_b')">B</div>
-            <div class="phonics-option" onclick="playSound('phonics_c')">C</div>
+            <div class="option" onclick="playSound('phonics_a')">A</div>
+            <div class="option" onclick="playSound('phonics_b')">B</div>
+            <div class="option" onclick="playSound('phonics_c')">C</div>
             
-            <h3>Spelling Trees</h3>
-            <p>Select the correct letters to form a word:</p>
-            <div class="word-option" onclick="playWordPhonics('cat')">C A T</div>
-            <div class="word-option" onclick="playWordPhonics('dog')">D O G</div>
-            <div class="word-option" onclick="playWordPhonics('sun')">S U N</div>
+            <h3>Spelling Trees 🌳</h3>
+            <p>Drag letters to complete the word:</p>
+            <div class="drag-drop">
+                <div class="option" draggable="true" ondragstart="drag(event)" id="C">C</div>
+                <div class="option" draggable="true" ondragstart="drag(event)" id="A">A</div>
+                <div class="option" draggable="true" ondragstart="drag(event)" id="T">T</div>
+            </div>
+            <div class="drop-zone" ondragover="allowDrop(event)" ondrop="drop(event, 'C')"></div>
+            <div class="drop-zone" ondragover="allowDrop(event)" ondrop="drop(event, 'A')"></div>
+            <div class="drop-zone" ondragover="allowDrop(event)" ondrop="drop(event, 'T')"></div>
             
-            <h3>Sight Word Pond</h3>
+            <h3>Sight Word Pond 🐟</h3>
             <p>Click the correct sight word:</p>
-            <div class="word-option" onclick="playSound('sight_the')">The</div>
-            <div class="word-option" onclick="playSound('sight_and')">And</div>
-            <div class="word-option" onclick="playSound('sight_is')">Is</div>
-            
-            <h3>Sentence Builder</h3>
-            <p>Click the correct sentence:</p>
-            <div class="sentence-option" onclick="playSound('sentence_1')">I see a cat</div>
-            <div class="sentence-option" onclick="playSound('sentence_2')">We go to the park</div>
+            <div class="option" onclick="playSound('sight_the')">The</div>
+            <div class="option" onclick="playSound('sight_and')">And</div>
+            <div class="option" onclick="playSound('sight_is')">Is</div>
         </div>
 
         <div class="game-area" id="mathGame">
-            <h2>Math Learning Activities</h2>
+            <h2>🔢 Math Learning Activities</h2>
             
-            <h3>Addition & Subtraction Jungle</h3>
+            <h3>Addition & Subtraction Jungle 🏕</h3>
             <p>What is 3 + 2?</p>
-            <div class="math-option" onclick="checkMathAnswer(5)">5</div>
-            <div class="math-option" onclick="checkMathAnswer(4)">4</div>
-            
-            <h3>Greater Than / Less Than River</h3>
-            <p>Which number is greater?</p>
-            <div class="math-option" onclick="checkMathAnswer(7)">7</div>
-            <div class="math-option" onclick="checkMathAnswer(3)">3</div>
-            
-            <h3>Number Order Hill</h3>
-            <p>Arrange in ascending order: 5, 2, 8</p>
-            <div class="math-option" onclick="checkMathAnswer('2, 5, 8')">2, 5, 8</div>
-            <div class="math-option" onclick="checkMathAnswer('5, 2, 8')">5, 2, 8</div>
+            <div class="option" onclick="checkMath(5)">5</div>
+            <div class="option" onclick="checkMath(4)">4</div>
         </div>
 
         <audio id="correctSound" src="sounds/correct.mp3"></audio>
@@ -125,13 +130,35 @@
         }
 
         function playSound(soundId) {
-            document.getElementById(soundId).play();
+            let sound = document.getElementById(soundId);
+            if (sound) sound.play();
+            else alert("Sound not found: " + soundId);
         }
 
-        function checkMathAnswer(answer) {
-            if (answer === 5 || answer === 7 || answer === '2, 5, 8') {
+        function checkMath(answer) {
+            if (answer === 5) {
                 playSound('correctSound');
                 alert("Correct! Well done!");
+            } else {
+                playSound('incorrectSound');
+                alert("Try again!");
+            }
+        }
+        
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+        
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
+        
+        function drop(event, correctLetter) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData("text");
+            if (data === correctLetter) {
+                event.target.innerHTML = data;
+                playSound('correctSound');
             } else {
                 playSound('incorrectSound');
                 alert("Try again!");
@@ -140,4 +167,3 @@
     </script>
 </body>
 </html>
-
