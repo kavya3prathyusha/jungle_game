@@ -47,7 +47,7 @@
             border-radius: 10px;
             display: none;
         }
-        .word-option, .sentence-option {
+        .word-option, .sentence-option, .phonics-option, .math-option {
             padding: 10px;
             margin: 5px;
             display: inline-block;
@@ -63,61 +63,81 @@
         <h1 class="title">Welcome to Jungle Learning Adventure!</h1>
         <p>Select a learning zone:</p>
         <div class="game-section">
-            <div class="zone" onclick="startEnglishZone()">English Zone</div>
-            <div class="zone" onclick="startMathZone()">Math Zone</div>
-            <div class="zone" onclick="startLogicZone()">Logic Zone</div>
+            <div class="zone" onclick="startZone('englishGame')">English Zone</div>
+            <div class="zone" onclick="startZone('mathGame')">Math Zone</div>
+            <div class="zone" onclick="startZone('logicGame')">Logic Zone</div>
         </div>
         
         <div class="game-area" id="englishGame">
             <h2>English Learning Activities</h2>
+            
+            <h3>Phonics Safari</h3>
+            <p>Click a letter to hear its phonics sound:</p>
+            <div class="phonics-option" onclick="playSound('phonics_a')">A</div>
+            <div class="phonics-option" onclick="playSound('phonics_b')">B</div>
+            <div class="phonics-option" onclick="playSound('phonics_c')">C</div>
+            
             <h3>Spelling Trees</h3>
             <p>Select the correct letters to form a word:</p>
             <div class="word-option" onclick="playWordPhonics('cat')">C A T</div>
             <div class="word-option" onclick="playWordPhonics('dog')">D O G</div>
             <div class="word-option" onclick="playWordPhonics('sun')">S U N</div>
-            <div class="word-option" onclick="playWordPhonics('bat')">B A T</div>
-            <div class="word-option" onclick="playWordPhonics('pen')">P E N</div>
+            
+            <h3>Sight Word Pond</h3>
+            <p>Click the correct sight word:</p>
+            <div class="word-option" onclick="playSound('sight_the')">The</div>
+            <div class="word-option" onclick="playSound('sight_and')">And</div>
+            <div class="word-option" onclick="playSound('sight_is')">Is</div>
+            
+            <h3>Sentence Builder</h3>
+            <p>Click the correct sentence:</p>
+            <div class="sentence-option" onclick="playSound('sentence_1')">I see a cat</div>
+            <div class="sentence-option" onclick="playSound('sentence_2')">We go to the park</div>
+        </div>
+
+        <div class="game-area" id="mathGame">
+            <h2>Math Learning Activities</h2>
+            
+            <h3>Addition & Subtraction Jungle</h3>
+            <p>What is 3 + 2?</p>
+            <div class="math-option" onclick="checkMathAnswer(5)">5</div>
+            <div class="math-option" onclick="checkMathAnswer(4)">4</div>
+            
+            <h3>Greater Than / Less Than River</h3>
+            <p>Which number is greater?</p>
+            <div class="math-option" onclick="checkMathAnswer(7)">7</div>
+            <div class="math-option" onclick="checkMathAnswer(3)">3</div>
+            
+            <h3>Number Order Hill</h3>
+            <p>Arrange in ascending order: 5, 2, 8</p>
+            <div class="math-option" onclick="checkMathAnswer('2, 5, 8')">2, 5, 8</div>
+            <div class="math-option" onclick="checkMathAnswer('5, 2, 8')">5, 2, 8</div>
         </div>
 
         <audio id="correctSound" src="sounds/correct.mp3"></audio>
         <audio id="incorrectSound" src="sounds/incorrect.mp3"></audio>
-        
-        <script>
-            const phonicsLetters = "abcdefghijklmnopqrstuvwxyz".split("");
-            phonicsLetters.forEach(letter => {
-                let audio = document.createElement("audio");
-                audio.id = `phonicsSound${letter.toUpperCase()}`;
-                audio.src = `sounds/phonics_${letter}.mp3`;
-                document.body.appendChild(audio);
-            });
-            
-            const wordSounds = {
-                'cat': 'sounds/cat.mp3',
-                'dog': 'sounds/dog.mp3',
-                'sun': 'sounds/sun.mp3',
-                'bat': 'sounds/bat.mp3',
-                'pen': 'sounds/pen.mp3'
-            };
-        </script>
     </div>
 
     <script>
-        function startEnglishZone() {
-            document.getElementById("englishGame").style.display = "block";
+        function startZone(zoneId) {
+            document.querySelectorAll(".game-area").forEach(zone => zone.style.display = "none");
+            document.getElementById(zoneId).style.display = "block";
         }
 
         function playSound(soundId) {
             document.getElementById(soundId).play();
         }
 
-        function playWordPhonics(word) {
-            let delay = 0;
-            for (let letter of word) {
-                setTimeout(() => playSound(`phonicsSound${letter.toUpperCase()}`), delay);
-                delay += 800;
+        function checkMathAnswer(answer) {
+            if (answer === 5 || answer === 7 || answer === '2, 5, 8') {
+                playSound('correctSound');
+                alert("Correct! Well done!");
+            } else {
+                playSound('incorrectSound');
+                alert("Try again!");
             }
-            setTimeout(() => new Audio(wordSounds[word]).play(), delay + 500);
         }
     </script>
 </body>
 </html>
+
